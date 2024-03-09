@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="image/png" sizes="32x32" rel="icon" href="./images/instaFav.png">
+    <title>User Page &#xb7 Instagram</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        #container{
+            width: 500px;
+            height: 500px;
+            box-shadow: 0 0 7px 3px #ddd;
+            border-radius: 5px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        img{
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            display: block;
+            margin: 10px auto;
+            box-shadow: 0 0 7px 3px #ddd;
+        }
+        #uesr-name{
+            margin: 15px 0;
+        }
+        p{
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        #user-email,#follwers{
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="./images/gigachad.jpg" alt="gigachad">
+        <h1 id="user-name">@DemoUserName</h1>
+        <p id="user-bio">Content Creator | Sde - 1</p>
+        <p id="user-email">demo_user@gmail.com</p>
+        <p id="follwers">Followers: 1000</p>
+    </div>
+</body>
+<script>
+        const userData = async() =>{
+       try {
+        const resp = await fetch("http://localhost:3000/",{
+            method:"GET",
+            credentials:"include"
+        });
+        if(resp.status!==200){
+            // window.location.href="http://localhost:5501/frontend/login.html"
+            console.log('If body activated and it show error');
+        }
+        const {data} = await resp.json();
+        const userName = document.getElementById("user-name")
+        const userEmail = document.getElementById("user-email")
+        const userBio = document.getElementById("user-bio")
+        console.log(data);
+        userName.innerText=data.username;
+        userEmail.innerText=data.email;
+        userBio.innerText=data.bio
+        
+       } catch (error) {
+            console.log(error.message)
+            // window.location.href="http://localhost:5501/frontend/login.html"
+       }
+    } 
+
+    userData()
+</script>
+</html>

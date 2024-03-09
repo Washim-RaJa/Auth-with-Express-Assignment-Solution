@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up &#xb7 Instagram</title>
+    <link type="image/png" sizes="32x32" rel="icon" href="./images/instaFav.png">
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        main{
+            width: 350px;
+            height: fit-content;
+            border: 1px solid #dbdbdb;
+            margin: 10px auto 0;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            padding: 10px 20px;
+        }
+        main>h1{
+            font-family: Lucida Calligraphy, sans-serif;
+            margin: 17px 0;
+        }
+        main>p{
+            font-family: sans-serif;
+            color: gray;
+            padding: 0 20px;
+
+        }
+        input[type='text'],input[type='email'],input[type='password']{
+            width: 260px;
+            height: 37px;
+            margin-bottom: 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding-left: 10px;
+        }
+        form{
+            padding: 15px 0;
+        }
+        form>p{
+            font-family: sans-serif;
+            color: gray;
+            font-size: 12px;
+            padding: 0 15px;
+            margin: 15px 0;
+        }
+        #signup-btn{
+            width: 260px;
+            height: 32px;
+            color: white;
+            font-size: 15px;
+            font-family: sans-serif;
+            font-weight: bold;
+            background-color: #4CB5F9;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+        footer{
+            width: 350px;
+            height: fit-content;
+            border: 1px solid #dbdbdb;
+            margin: 10px auto 0;
+            text-align: center;
+            padding: 15px 20px;
+        }
+        footer>p{
+            font-family: sans-serif;
+        }
+        footer>p>a{
+            text-decoration: none;
+            font-weight: bold;
+            color: #3c90c9;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Instagram</h1>
+        <p>Sign up to see photos and videos from your friends.</p>
+        <form action="./signup" method="post">
+            <input id="fullname" type="text" name="name" placeholder="Enter your Name">
+            <input id="user-name" type="text" name="username" placeholder="Enter your Username">
+            <input id="user-email" type="email" name="email" placeholder="Enter your Email">
+            <input id="user-password" type="password" name="password" placeholder="Enter your Password">
+            <input id="user-bio" type="text" name="bio" placeholder="Enter your Bio">
+
+            <p>
+                People who use our service may have uploaded your contact information to Instagram.
+                <span style="color: #000081;cursor: pointer;"> Learn more</span>
+            </p>
+
+            <p>
+                By signing up, you agree to our <span style="color: #000081;cursor: pointer;">Terms</span>,
+                <span style="color: #000081;cursor: pointer;">Privacy Policy</span>
+                and
+                <span style="color: #000081;cursor: pointer;">Cookies Policy</span>
+            </p>
+            <input type="submit" value="Sign Up" id="signup-btn">
+        </form>
+    </main>
+    <footer>
+        <p>Have an account? <a href="./login.html">Log in</a></p>
+    </footer>
+    <script>
+        const fullName = document.getElementById('fullname');
+        const userName = document.getElementById('user-name');
+        const userEmail = document.getElementById('user-email');
+        const userPassword = document.getElementById('user-password');
+        const userBio = document.getElementById('user-bio');
+        const signUpBtn = document.getElementById('signup-btn');
+
+        signUpBtn.addEventListener('click', (event)=>{
+            event.preventDefault();
+            if(!fullName && userName && userEmail && userPassword && userBio){
+                alert('All input fields are required')
+                return;
+            }
+            userData = {
+                name: fullName.value,
+                username: userName.value,
+                email: userEmail.value,
+                password: userPassword.value,
+                bio: userBio.value
+            }
+            userSignUp(userData)
+        })
+
+        const userSignUp = async (payload)=>{
+            try {
+                const response = await fetch('http://localhost:3000/signup', {
+                    method: 'POST',
+                    headers: {'Content-type': "application/json"},
+                    body: JSON.stringify(payload)
+                })
+
+                const data = await response.json();
+                console.log(data);
+                window.location.href = 'http://localhost:5501/frontend/login.html'
+                
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+    </script>
+</body>
+</html>
